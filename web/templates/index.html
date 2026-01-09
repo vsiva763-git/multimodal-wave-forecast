@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean Wave Forecast - AI-Powered Prediction System</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>🌊 Ocean Wave Forecast</h1>
+            <p class="subtitle">AI-Powered Multimodal Wave Prediction & Alert System</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Control Panel -->
+        <section class="card">
+            <h2>📍 Select Location</h2>
+            <div class="controls">
+                <div class="control-group">
+                    <label for="ocean-select">Ocean Region:</label>
+                    <select id="ocean-select" class="select-input">
+                        <option value="">Select ocean region...</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="station-select">Buoy Station:</label>
+                    <select id="station-select" class="select-input" disabled>
+                        <option value="">Select a region first...</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="threshold">Alert Threshold (m):</label>
+                    <input type="number" id="threshold" class="text-input" value="4.0" step="0.5" min="0.5" max="10">
+                </div>
+
+                <button id="predict-btn" class="btn btn-primary" disabled>
+                    Generate Forecast
+                </button>
+                
+                <button id="predict-region-btn" class="btn btn-secondary" disabled>
+                    Forecast Entire Region
+                </button>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="card">
+            <h2>🗺️ Interactive Map</h2>
+            <div id="map" class="map-container"></div>
+            <div class="map-legend">
+                <div class="legend-item">
+                    <span class="legend-icon" style="background: #3498db;">●</span>
+                    <span>Buoy Station</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon" style="background: #e74c3c;">●</span>
+                    <span>Alert Threshold Exceeded</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon" style="background: #2ecc71;">●</span>
+                    <span>Normal Conditions</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Forecast Results -->
+        <section id="forecast-section" class="card" style="display: none;">
+            <h2>📊 Forecast Results</h2>
+            <div id="station-info" class="station-info"></div>
+            <div id="alert-banner" class="alert-banner" style="display: none;"></div>
+            <canvas id="forecast-chart"></canvas>
+        </section>
+
+        <!-- Region Forecast -->
+        <section id="region-forecast-section" class="card" style="display: none;">
+            <h2>🌐 Regional Forecast Summary</h2>
+            <div id="region-info" class="region-info"></div>
+            <div id="region-stations" class="region-stations-grid"></div>
+        </section>
+
+        <!-- Model Info -->
+        <section class="card info-section">
+            <h2>ℹ️ About This System</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>🤖 AI Model</h3>
+                    <p>Multimodal deep learning combining CNN + Transformer + LSTM for spatial-temporal wave prediction</p>
+                </div>
+                <div class="info-item">
+                    <h3>📡 Data Sources</h3>
+                    <p>NOAA WaveWatch III (waves), GFS (winds/pressure), NDBC buoys (validation)</p>
+                </div>
+                <div class="info-item">
+                    <h3>⏱️ Forecast Horizon</h3>
+                    <p>1-6 hours ahead with hourly resolution</p>
+                </div>
+                <div class="info-item">
+                    <h3>🚨 Alert System</h3>
+                    <p>Configurable thresholds for dangerous wave conditions</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ocean Wave Forecast System | Built with PyTorch Lightning & Flask</p>
+            <p class="footer-links">
+                <a href="https://github.com/vsiva763-git/multimodal-wave-forecast" target="_blank">GitHub</a> |
+                <a href="/api/health" target="_blank">API Status</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

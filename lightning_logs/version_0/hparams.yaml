@@ -1,0 +1,9 @@
+cnn_dim: 128
+fusion_dim: 256
+gfs_channels: 3
+horizon: 2
+lr: 0.001
+lstm_hidden: 256
+patch_size: 5
+time_steps: 4
+ww3_channels: 3

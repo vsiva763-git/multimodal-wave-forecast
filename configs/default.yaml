@@ -1,0 +1,13 @@
+# Region selection: use either region_bbox or ocean_region
+region_bbox: [-135, 20, -110, 45]  # min_lon, min_lat, max_lon, max_lat
+ocean_region: "us_west_coast"  # or north_pacific, north_atlantic, etc.
+buoys: ["46042", "46059"]
+patch_size: 9
+time_steps: 12
+horizon: 6
+thresholds:
+  swh: 4.0
+webhook_url: null
+training:
+  epochs: 10
+  batch_size: 16

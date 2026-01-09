@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wave Forecast Demo</title>
+    <style>
+        body { font-family: Arial; padding: 20px; max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        button { padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #2980b9; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🌊 Wave Forecast API Demo</h1>
+    
+    <div class="section">
+        <h2>Test API Endpoints</h2>
+        <button onclick="testHealth()">Test Health</button>
+        <button onclick="testRegions()">Test Ocean Regions</button>
+        <button onclick="testStations()">Test Stations (US West)</button>
+        <button onclick="testPredict()">Test Single Prediction</button>
+        <button onclick="testRegionPredict()">Test Region Prediction</button>
+        <pre id="output">Click a button to test...</pre>
+    </div>
+
+    <script>
+        const API = 'http://localhost:5000/api';
+        
+        async function testHealth() {
+            const res = await fetch(`${API}/health`);
+            const data = await res.json();
+            document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+        }
+        
+        async function testRegions() {
+            const res = await fetch(`${API}/ocean-regions`);
+            const data = await res.json();
+            document.getElementById('output').textContent = JSON.stringify(data.regions.slice(0, 3), null, 2) + '\n... (showing 3 of ' + data.regions.length + ')';
+        }
+        
+        async function testStations() {
+            const res = await fetch(`${API}/stations?ocean=us_west_coast`);
+            const data = await res.json();
+            document.getElementById('output').textContent = JSON.stringify({...data, stations: data.stations.slice(0, 5)}, null, 2) + '\n... (showing 5 stations)';
+        }
+        
+        async function testPredict() {
+            const res = await fetch(`${API}/predict`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({station_id: '46042', threshold: 4.0})
+            });
+            const data = await res.json();
+            document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+        }
+        
+        async function testRegionPredict() {
+            const res = await fetch(`${API}/predict-ocean`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ocean: 'hawaii', threshold: 4.0, max_stations: 3})
+            });
+            const data = await res.json();
+            document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+        }
+    </script>
+</body>
+</html>
